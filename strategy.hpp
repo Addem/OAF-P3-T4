@@ -10,6 +10,7 @@ class Strategy {
 		int _cash;
 		vector<int> _owned;
 		Strategy(std::string a) : _name(a){ _cash = 10000; }
+		int index;
 
 	public:
 		virtual void step();

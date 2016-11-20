@@ -39,6 +39,8 @@ for (int i = 0; i < n; ++i){
 	}
 }
 
-
+for (int i = 0; i < n; ++i){
+	strat[i]->step
+}
 
 for (int i = 0; i < n; ++i) delete strat[i];
