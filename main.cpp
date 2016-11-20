@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 struct Map{
 	std::string owner;
@@ -9,6 +11,7 @@ struct Map{
 	bool hasHouse;
 };
 
+int main(){
 ifstream f("test.txt")
 int m;
 f >> m;
@@ -44,3 +47,4 @@ for (int i = 0; i < n; ++i){
 }
 
 for (int i = 0; i < n; ++i) delete strat[i];
+}
