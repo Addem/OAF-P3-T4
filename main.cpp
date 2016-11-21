@@ -58,7 +58,7 @@ while (inGame > 1){
 				}
 			}
 			if (thisMuch != 0) strat[giveHim]->addCash(thisMuch);
-			std::cout << strat[i]->nev() << " has " << strat[i]->cash() <<" money in the bank " << std::endl;
+			if (strat[i]->stillInGame()) std::cout << strat[i]->nev() << " has " << strat[i]->cash() <<" money " << std::endl;
 			random = rand()%6 + 1;
 			thisMuch = 0;
 	}
