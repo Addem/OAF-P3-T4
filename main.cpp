@@ -2,14 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-
-struct Map{
-	std::string owner;
-	int value;
-	bool hasHouse;
-	bool forSale;
-	int type; // 0 is for House, 1 is for Lucky, 2 is for Service
-};
+#include <stdlib.h>
+#include <time.h>
 
 int main(){
 std::ifstream f("test.txt");
@@ -21,7 +15,7 @@ for (int i = 0; i<m; ++i){
 	int val;
 	f >> c;
 	switch (c){
-		case 'h' : map[i].owner = ""; map[i].hasHouse = false; map[i].forSale = true; map[i].type = 0; break;
+		case 'h' : map[i].owner = -1; map[i].hasHouse = false; map[i].type = 0; break;
 		case 'l' : f>>val; map[i].value = val; map[i].type = 1; break;
 		case 's' : f>>val; map[i].value = val; map[i].type = 2; break;
 	}
@@ -41,19 +35,36 @@ for (int i = 0; i < n; ++i){
 	}
 }
 
-for (int i = 0; i < m; ++i){
-	int sw;
-	sw = map[i].type;
-	switch(sw){
-		case 0 : std::cout<<map[i].owner<< "<-ove a haz  " << std::endl; break;
-		case 1 : std::cout<< "lucky value: " << map[i].value << std::endl; break;
-		case 2 : std::cout<< "service value: " << map[i].value << std::endl; break;
-	}
-	
-}
+int random;
+srand (time(NULL));
+random = rand()%6 + 1; // generates random number between 1 and 6
+int inGame = n;
+int giveHim;
+int thisMuch = 0;
+bool losers[n];
+for (int i = 0; i<n; ++i) losers[i] = false;
 
-for ( int i = 0; i < n ; ++i){
-	strat[i]->step;
+while (inGame > 1){
+	for (int i = 0; i < n; ++i){
+			strat[i]->step(map, m, i, giveHim, thisMuch, random);
+			if (!strat[i]->stillInGame() && !losers[i]){//if the player lost all his money during the step
+				--inGame;
+				losers[i] = true;
+				for (int j = 0; j < m; ++j){
+					if (map[j].owner == i){
+						map[j].owner = -1;
+						!map[j].hasHouse;
+					}
+				}
+			}
+			if (thisMuch != 0) strat[giveHim]->addCash(thisMuch);
+			std::cout << strat[i]->nev() << " has " << strat[i]->cash() <<" money in the bank " << std::endl;
+			random = rand()%6 + 1;
+			thisMuch = 0;
+	}
+}
+for (int i = 0; i < n; ++i){
+	if (strat[i]->stillInGame()) std::cout<< "Winner: " << strat[i]->nev() << std::endl;
 }
 
 for (int i = 0; i < n; ++i) delete strat[i];
