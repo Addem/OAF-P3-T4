@@ -43,9 +43,11 @@ int giveHim;
 int thisMuch = 0;
 bool losers[n];
 for (int i = 0; i<n; ++i) losers[i] = false;
+int round = 1;
 
 while (inGame > 1){
 	for (int i = 0; i < n; ++i){
+			std::cout<< round << ". kor" << std::endl;
 			strat[i]->step(map, m, i, giveHim, thisMuch, random);
 			if (!strat[i]->stillInGame() && !losers[i]){//if the player lost all his money during the step
 				--inGame;
@@ -53,14 +55,18 @@ while (inGame > 1){
 				for (int j = 0; j < m; ++j){
 					if (map[j].owner == i){
 						map[j].owner = -1;
-						!map[j].hasHouse;
+						map[j].hasHouse = false;
 					}
 				}
 			}
 			if (thisMuch != 0) strat[giveHim]->addCash(thisMuch);
-			if (strat[i]->stillInGame()) std::cout << strat[i]->nev() << " has " << strat[i]->cash() <<" money " << std::endl;
+			//if (strat[i]->stillInGame()) std::cout << strat[i]->nev() << " has " << strat[i]->cash() <<" money in the bank " << std::endl;
+			for (int k = 0; k < m; ++k)
+				if(map[k].type==0 && map[k].owner != -1)
+					std::cout<<"A " << k << ". mezon levo haz " << strat[map[k].owner]->nev() << " tulajdona." <<std::endl;
 			random = rand()%6 + 1;
 			thisMuch = 0;
+			++round;
 	}
 }
 for (int i = 0; i < n; ++i){
